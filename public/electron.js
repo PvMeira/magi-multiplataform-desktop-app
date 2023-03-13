@@ -2,6 +2,8 @@ const { app, BrowserWindow } = require('electron');
 const remoteMain = require('@electron/remote/main');
 const path = require('path');
 remoteMain.initialize();
+const isDev = require('electron-is-dev');
+
 
 function createWindow () {
   // Create the browser window.
@@ -24,9 +26,14 @@ function createWindow () {
   })
 
   //load the index.html from a url
-  // win.loadURL('http://localhost:3000');public/index.html
+  // win.loadURL('http://localhost:3000');
   //win.loadFile(path.join(__dirname, 'index.html'));
-  win.loadURL('http://localhost:3000');
+  //win.loadURL('http://localhost:3000');
+  win.loadURL(
+    isDev
+      ? "http://localhost:3000"
+      : `file://${path.join(__dirname, "../build/index.html")}`
+  );
 
 
   // Open the DevTools.
